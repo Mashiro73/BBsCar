@@ -1,0 +1,79 @@
+*** Using Compiler 'V6.23', folder: 'E:\Keil5\ARM\ARMCLANG\Bin'
+Build target 'BBsCar'
+compiling stm32f1xx_hal_adc_ex.c...
+compiling stm32f1xx_hal_pwr.c...
+compiling stm32f1xx_hal_gpio_ex.c...
+compiling stm32f1xx_it.c...
+compiling stm32f1xx_hal_adc.c...
+compiling stm32f1xx_hal_msp.c...
+../Core/Src/main.c(25): warning: In file included from...../Trace\adc_proc.h(29): warning: 'extern' variable has an initializer [-Wextern-initializer]
+   29 | extern float adc_ave_values[NUM_CHANNELS] = {0.0f, 0.0f, 0.0f, 0.0f}; // 用于存储每个通道的平均值
+      |              ^
+../Core/Src/main.c(148): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  148 |     LCD_ShowString(0, 13 * 0, LCDBuf, WHITE, BLACK, 12, 0);
+      |                               ^~~~~~
+../Drivers/BSP\lcd.h(84): note: passing argument to parameter 'p' here
+   84 | void LCD_ShowString(u16 x,u16 y,const u8 *p,
+      |                                           ^
+../Core/Src/main.c(150): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  150 |     LCD_ShowString(0, 13 * 1, LCDBuf, WHITE, BLACK, 12, 0);
+      |                               ^~~~~~
+../Drivers/BSP\lcd.h(84): note: passing argument to parameter 'p' here
+   84 | void LCD_ShowString(u16 x,u16 y,const u8 *p,
+      |                                           ^
+../Core/Src/main.c(152): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  152 |     LCD_ShowString(0, 13 * 2, LCDBuf, WHITE, BLACK, 12, 0);
+      |                               ^~~~~~
+../Drivers/BSP\lcd.h(84): note: passing argument to parameter 'p' here
+   84 | void LCD_ShowString(u16 x,u16 y,const u8 *p,
+      |                                           ^
+../Core/Src/main.c(154): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  154 |     LCD_ShowString(0, 13 * 3, LCDBuf, WHITE, BLACK, 12, 0);
+      |                               ^~~~~~
+../Drivers/BSP\lcd.h(84): note: passing argument to parameter 'p' here
+   84 | void LCD_ShowString(u16 x,u16 y,const u8 *p,
+      |                                           ^
+5 warnings generated.
+compiling main.c...
+compiling stm32f1xx_hal_cortex.c...
+compiling stm32f1xx_hal_dma.c...
+compiling stm32f1xx_hal.c...
+compiling stm32f1xx_hal_rcc.c...
+compiling stm32f1xx_hal_rcc_ex.c...
+compiling stm32f1xx_hal_flash.c...
+compiling stm32f1xx_hal_gpio.c...
+compiling stm32f1xx_hal_flash_ex.c...
+compiling stm32f1xx_hal_exti.c...
+compiling system_stm32f1xx.c...
+compiling stm32f1xx_hal_tim.c...
+compiling stm32f1xx_hal_tim_ex.c...
+compiling myprint.c...
+compiling Motor.c...
+../Trace/adc_proc.c(1): warning: In file included from...../Trace\adc_proc.h(29): warning: 'extern' variable has an initializer [-Wextern-initializer]
+   29 | extern float adc_ave_values[NUM_CHANNELS] = {0.0f, 0.0f, 0.0f, 0.0f}; // 用于存储每个通道的平均值
+      |              ^
+../Trace/adc_proc.c(6): error: redefinition of 'adc_raw_values' with a different type: 'uint16_t[4]' (aka 'unsigned short[4]') vs 'uint16_t[40]' (aka 'unsigned short[40]')
+    6 | uint16_t adc_raw_values[NUM_CHANNELS]; // Or uint32_t if using 12-bit resolution aligned to the right in a 32-bit register
+      |          ^
+../Trace\adc_proc.h(18): note: previous declaration is here
+   18 | extern uint16_t adc_raw_values[TOTAL_SAMPLES]; // Or uint32_t if using 12-bit resolution aligned to the right in a 32-bit register
+      |                 ^
+../Trace/adc_proc.c(14): error: redefinition of 'adc_ave_values'
+   14 | float adc_ave_values[NUM_CHANNELS] = {0.0f, 0.0f, 0.0f, 0.0f};  // 用于存储每个通道的平均值
+      |       ^
+../Trace\adc_proc.h(29): note: previous definition is here
+   29 | extern float adc_ave_values[NUM_CHANNELS] = {0.0f, 0.0f, 0.0f, 0.0f}; // 用于存储每个通道的平均值
+      |              ^
+../Trace/adc_proc.c(103): warning: incompatible pointer types passing 'float[10]' to parameter of type 'uint16_t *' (aka 'unsigned short *') [-Wincompatible-pointer-types]
+  103 |         adc_ave_values[i] = trimmed_mean_filter(adc_samples[i], SAMPLES_PER_CHANNEL); // 计算每个通道的平均值
+      |                                                 ^~~~~~~~~~~~~~
+../Trace/adc_proc.c(31): note: passing argument to parameter 'values' here
+   31 | float trimmed_mean_filter(uint16_t *values, uint16_t numofvals)
+      |                                     ^
+2 warnings and 2 errors generated.
+compiling adc_proc.c...
+compiling stm32f1xx_hal_uart.c...
+compiling lcd.c...
+"BBsCar\BBsCar.axf" - 2 Error(s), 7 Warning(s).
+Target not created.
+Build Time Elapsed:  00:01:24
