@@ -83,14 +83,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim->Instance == TIM2)
   {
     ADCValProc();
-//    if (flagCarStop == 1)
-//    {
-//      Motor_SetSpeed(&MotorL, 0);
-//      Motor_SetSpeed(&MotorR, 0);
-//      return; // 如果车辆停止，直接返回
-//    }
-    Motor_SetSpeed(&MotorL, MOTOR_BASE_SPEED - 4*adc_final_diff);
-    Motor_SetSpeed(&MotorR, MOTOR_BASE_SPEED + 4*adc_final_diff);
+    Motor_SetSpeed(&MotorL, MOTOR_BASE_SPEED - 20*adc_final_diff);
+    Motor_SetSpeed(&MotorR, MOTOR_BASE_SPEED + 20*adc_final_diff);
   }
   if (htim->Instance == TIM3)
   {
@@ -114,8 +108,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       if(cntEcho<5000 && cntEcho>100)
       {
         flagCarStop = 1; // 如果回声时间小于1000ms，认为车辆停止
-        Motor_SetSpeed(&MotorL, 0);
-        Motor_SetSpeed(&MotorR, 0);
+        // Motor_SetSpeed(&MotorL, 0);
+        // Motor_SetSpeed(&MotorR, 0);
       }
       else
       {
