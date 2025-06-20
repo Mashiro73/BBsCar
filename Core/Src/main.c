@@ -51,9 +51,9 @@ TIM_HandleTypeDef htim2;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-PID_Controller_t Tracking_PID;
 Motor MotorL;
 Motor MotorR;
+float div_output;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -75,9 +75,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim->Instance == TIM2)
   {
     ADCValProc();
-    float div_output = PID_Compute(&Tracking_PID);
-    Motor_SetSpeed(&MotorL, MOTOR_BASE_SPEED + div_output);
-    Motor_SetSpeed(&MotorR, MOTOR_BASE_SPEED - div_output);
+    Motor_SetSpeed(&MotorL, MOTOR_BASE_SPEED - adc_final_diff);
+    Motor_SetSpeed(&MotorR, MOTOR_BASE_SPEED + adc_final_diff);
   }
 }
 /* USER CODE END 0 */
@@ -117,29 +116,28 @@ int main(void)
   MX_TIM2_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  MotorL.dir_pin = MLDir_Pin;
-  MotorL.dir_port = MLDir_GPIO_Port;
+
   MotorL.htim = &htim1;
   MotorL.pwm_channel = TIM_CHANNEL_1;
+  MotorL.dir_port = GPIOB;
+  MotorL.dirIN1 = GPIO_PIN_4; // IN1 for MotorL
+  MotorL.dirIN2 = GPIO_PIN_5; // IN2 for MotorLx
 
-  MotorR.dir_pin = MRDir_Pin;
-  MotorR.dir_port = MRDir_GPIO_Port;
   MotorR.htim = &htim1;
   MotorR.pwm_channel = TIM_CHANNEL_2;
+  MotorR.dir_port = GPIOA;
+  MotorR.dirIN1 = GPIO_PIN_15; // IN1 for MotorR
+  MotorR.dirIN2 = GPIO_PIN_12; // IN2 for MotorR
 
   LCD_Init();
   LCD_Fill(0, 0, 128, 160, BLACK);
-  PID_Init(&Tracking_PID, PID_MODE_POSITIONAL, 0.5, 0, 0, 0.01, 0, 1000, 1, 1, 0);
-  PID_SetSetpoint(&Tracking_PID, 0);
 
   HAL_ADCEx_Calibration_Start(&hadc1);
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)adc_raw_values, NUM_CHANNELS);
 
   HAL_TIM_Base_Start_IT(&htim2);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-
-  // where hadcx is your ADC handle (e.g., hadc1)
+  Motor_Init(&MotorL);
+  Motor_Init(&MotorR);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -148,13 +146,13 @@ int main(void)
   {
     char LCDBuf[50] = {0};
 #ifdef ADC_TEST_AVE
-    sprintf(LCDBuf, "In1:%.2f", adc_ave_values[0]);
+    sprintf(LCDBuf, "In1:%.2f     ", adc_ave_values[0]);
     LCD_ShowString(0, 13 * 0, LCDBuf, WHITE, BLACK, 12, 0);
-    sprintf(LCDBuf, "In2:%.2f", adc_ave_values[1]);
+    sprintf(LCDBuf, "In2:%.2f     ", adc_ave_values[1]);
     LCD_ShowString(0, 13 * 1, LCDBuf, WHITE, BLACK, 12, 0);
-    sprintf(LCDBuf, "In3:%.2f", adc_ave_values[2]);
+    sprintf(LCDBuf, "In3:%.2f     ", adc_ave_values[2]);
     LCD_ShowString(0, 13 * 2, LCDBuf, WHITE, BLACK, 12, 0);
-    sprintf(LCDBuf, "In4:%.2f", adc_ave_values[3]);
+    sprintf(LCDBuf, "In4:%.2f     ", adc_ave_values[3]);
     LCD_ShowString(0, 13 * 3, LCDBuf, WHITE, BLACK, 12, 0);
 #endif
 #ifdef ADC_TEST_RAW
@@ -168,16 +166,19 @@ int main(void)
     LCD_ShowString(0, 13 * 3, LCDBuf, WHITE, BLACK, 12, 0);
 #endif
 #ifdef ADC_TEST_NORM
-    sprintf(LCDBuf, "In1:%d    ", adc_norm_values[0]);
+    sprintf(LCDBuf, "In1:%.2f    ", adc_norm_values[0]);
     LCD_ShowString(0, 13 * 0, LCDBuf, WHITE, BLACK, 12, 0);
-    sprintf(LCDBuf, "In2:%d    ", adc_norm_values[1]);
+    sprintf(LCDBuf, "In2:%.2f     ", adc_norm_values[1]);
     LCD_ShowString(0, 13 * 1, LCDBuf, WHITE, BLACK, 12, 0);
-    sprintf(LCDBuf, "In3:%d    ", adc_norm_values[2]);
+    sprintf(LCDBuf, "In3:%.2f     ", adc_norm_values[2]);
     LCD_ShowString(0, 13 * 2, LCDBuf, WHITE, BLACK, 12, 0);
-    sprintf(LCDBuf, "In4:%d    ", adc_norm_values[3]);
+    sprintf(LCDBuf, "In4:%.2f     ", adc_norm_values[3]);
     LCD_ShowString(0, 13 * 3, LCDBuf, WHITE, BLACK, 12, 0);
 #endif
-    printf("%.2f\n", Tracking_PID.current_measurement);
+    sprintf(LCDBuf, "diff:%.2f     ", adc_final_diff);
+    LCD_ShowString(0, 13 * 4, LCDBuf, WHITE, BLACK, 12, 0);
+    sprintf(LCDBuf, "diff:%.2f     ", div_output);
+    LCD_ShowString(0, 13 * 5, LCDBuf, WHITE, BLACK, 12, 0);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -490,21 +491,22 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LCD_DC_Pin | LCD_BLK_Pin | LCD_RES_Pin | LCD_SCLK_Pin | MLDir_Pin | MRDir_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LCD_DC_Pin | LCD_BLK_Pin | LCD_RES_Pin | LCD_SCLK_Pin | BIN2_Pin | BIN1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LCD_CS_Pin | LCD_MOSI_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LCD_CS_Pin | LCD_MOSI_Pin | STBY_Pin | AIN1_Pin | AIN2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : LCD_DC_Pin LCD_BLK_Pin LCD_RES_Pin LCD_SCLK_Pin
-                           MLDir_Pin MRDir_Pin */
-  GPIO_InitStruct.Pin = LCD_DC_Pin | LCD_BLK_Pin | LCD_RES_Pin | LCD_SCLK_Pin | MLDir_Pin | MRDir_Pin;
+                           BIN2_Pin BIN1_Pin */
+  GPIO_InitStruct.Pin = LCD_DC_Pin | LCD_BLK_Pin | LCD_RES_Pin | LCD_SCLK_Pin | BIN2_Pin | BIN1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LCD_CS_Pin LCD_MOSI_Pin */
-  GPIO_InitStruct.Pin = LCD_CS_Pin | LCD_MOSI_Pin;
+  /*Configure GPIO pins : LCD_CS_Pin LCD_MOSI_Pin STBY_Pin AIN1_Pin
+                           AIN2_Pin */
+  GPIO_InitStruct.Pin = LCD_CS_Pin | LCD_MOSI_Pin | STBY_Pin | AIN1_Pin | AIN2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

@@ -23,7 +23,6 @@
 "bbscar\lcd.o"
 "bbscar\myprint.o"
 "bbscar\motor.o"
-"bbscar\pid_controller.o"
 "bbscar\adc_proc.o"
 --library_type=microlib --strict --scatter "BBsCar\BBsCar.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

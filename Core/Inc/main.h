@@ -33,7 +33,6 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <string.h>
-#include "pid_controller.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -73,15 +72,20 @@ void Error_Handler(void);
 #define LCD_CS_GPIO_Port GPIOB
 #define LCD_MOSI_Pin GPIO_PIN_1
 #define LCD_MOSI_GPIO_Port GPIOB
-#define MLDir_Pin GPIO_PIN_10
-#define MLDir_GPIO_Port GPIOA
-#define MRDir_Pin GPIO_PIN_11
-#define MRDir_GPIO_Port GPIOA
+#define BIN2_Pin GPIO_PIN_12
+#define BIN2_GPIO_Port GPIOA
+#define BIN1_Pin GPIO_PIN_15
+#define BIN1_GPIO_Port GPIOA
+#define STBY_Pin GPIO_PIN_3
+#define STBY_GPIO_Port GPIOB
+#define AIN1_Pin GPIO_PIN_4
+#define AIN1_GPIO_Port GPIOB
+#define AIN2_Pin GPIO_PIN_5
+#define AIN2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 extern ADC_HandleTypeDef hadc1;
 extern DMA_HandleTypeDef hdma_adc1;
-extern PID_Controller_t Tracking_PID;
 
 /* USER CODE END Private defines */
 

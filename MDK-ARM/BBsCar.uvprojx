@@ -546,16 +546,6 @@
           <GroupName>Trace</GroupName>
           <Files>
             <File>
-              <FileName>pid_controller.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Trace\pid_controller.c</FilePath>
-            </File>
-            <File>
-              <FileName>pid_controller.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Trace\pid_controller.h</FilePath>
-            </File>
-            <File>
               <FileName>adc_proc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Trace\adc_proc.c</FilePath>

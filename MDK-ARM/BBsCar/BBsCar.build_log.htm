@@ -21,51 +21,52 @@ Target DLL:      CMSIS_AGDI.dll V1.33.22.0
 Dialog DLL:      TCM.DLL V1.56.6.0
  
 <h2>Project:</h2>
-e:\Keil Project\STM32\STM32F103C8T6\BBsCar\MDK-ARM\BBsCar.uvprojx
-Project File Date:  06/19/2025
+E:\Keil Project\STM32\STM32F103C8T6\BBsCar\MDK-ARM\BBsCar.uvprojx
+Project File Date:  06/20/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.23', folder: 'E:\Keil5\ARM\ARMCLANG\Bin'
 Build target 'BBsCar'
-../Trace/adc_proc.c(106): warning: incompatible pointer types passing 'float[10]' to parameter of type 'uint16_t *' (aka 'unsigned short *') [-Wincompatible-pointer-types]
-  106 |             adc_ave_values[i] = trimmed_mean_filter(adc_samples[i], SAMPLES_PER_CHANNEL); // 计算每个通道的平均值
-      |                                                     ^~~~~~~~~~~~~~
-../Trace/adc_proc.c(31): note: passing argument to parameter 'values' here
-   31 | float trimmed_mean_filter(uint16_t *values, uint16_t numofvals)
-      |                                     ^
-../Trace/adc_proc.c(113): warning: non-void function does not return a value [-Wreturn-type]
-  113 | }
-      | ^
-2 warnings generated.
-compiling adc_proc.c...
-../Core/Src/main.c(152): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-  152 |     LCD_ShowString(0, 13 * 0, LCDBuf, WHITE, BLACK, 12, 0);
+../Core/Src/main.c(170): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  170 |     LCD_ShowString(0, 13 * 0, LCDBuf, WHITE, BLACK, 12, 0);
       |                               ^~~~~~
 ../Drivers/BSP\lcd.h(84): note: passing argument to parameter 'p' here
    84 | void LCD_ShowString(u16 x,u16 y,const u8 *p,
       |                                           ^
-../Core/Src/main.c(154): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-  154 |     LCD_ShowString(0, 13 * 1, LCDBuf, WHITE, BLACK, 12, 0);
+../Core/Src/main.c(172): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  172 |     LCD_ShowString(0, 13 * 1, LCDBuf, WHITE, BLACK, 12, 0);
       |                               ^~~~~~
 ../Drivers/BSP\lcd.h(84): note: passing argument to parameter 'p' here
    84 | void LCD_ShowString(u16 x,u16 y,const u8 *p,
       |                                           ^
-../Core/Src/main.c(156): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-  156 |     LCD_ShowString(0, 13 * 2, LCDBuf, WHITE, BLACK, 12, 0);
+../Core/Src/main.c(174): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  174 |     LCD_ShowString(0, 13 * 2, LCDBuf, WHITE, BLACK, 12, 0);
       |                               ^~~~~~
 ../Drivers/BSP\lcd.h(84): note: passing argument to parameter 'p' here
    84 | void LCD_ShowString(u16 x,u16 y,const u8 *p,
       |                                           ^
-../Core/Src/main.c(158): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-  158 |     LCD_ShowString(0, 13 * 3, LCDBuf, WHITE, BLACK, 12, 0);
+../Core/Src/main.c(176): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  176 |     LCD_ShowString(0, 13 * 3, LCDBuf, WHITE, BLACK, 12, 0);
       |                               ^~~~~~
 ../Drivers/BSP\lcd.h(84): note: passing argument to parameter 'p' here
    84 | void LCD_ShowString(u16 x,u16 y,const u8 *p,
       |                                           ^
-4 warnings generated.
+../Core/Src/main.c(179): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  179 |     LCD_ShowString(0, 13 * 4, LCDBuf, WHITE, BLACK, 12, 0);
+      |                               ^~~~~~
+../Drivers/BSP\lcd.h(84): note: passing argument to parameter 'p' here
+   84 | void LCD_ShowString(u16 x,u16 y,const u8 *p,
+      |                                           ^
+../Core/Src/main.c(181): warning: passing 'char[50]' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  181 |     LCD_ShowString(0, 13 * 5, LCDBuf, WHITE, BLACK, 12, 0);
+      |                               ^~~~~~
+../Drivers/BSP\lcd.h(84): note: passing argument to parameter 'p' here
+   84 | void LCD_ShowString(u16 x,u16 y,const u8 *p,
+      |                                           ^
+6 warnings generated.
 compiling main.c...
 linking...
-Program Size: Code=20452 RO-data=1452 RW-data=16 ZI-data=1680  
+Program Size: Code=19668 RO-data=1468 RW-data=12 ZI-data=1628  
 FromELF: creating hex file...
 "BBsCar\BBsCar.axf" - 0 Error(s), 6 Warning(s).
 

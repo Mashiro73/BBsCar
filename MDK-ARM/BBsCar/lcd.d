@@ -23,4 +23,4 @@ bbscar/lcd.o: ..\Drivers\BSP\lcd.c ..\Drivers\BSP\lcd.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim_ex.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h \
-  ..\Trace\pid_controller.h ..\Drivers\BSP\lcd_font.h
+  ..\Drivers\BSP\lcd_font.h

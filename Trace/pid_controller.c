@@ -70,11 +70,11 @@ float PID_Compute(PID_Controller_t *pid)
         float i_term;
 
         pid->integral_term += pid->Ki * error * pid->dt;
-        if (pid->enable_integral_clamping)
-        {
-            pid->integral_term = clamp(pid->integral_term, pid->integral_min, pid->integral_max);
-        }
-        i_term = pid->integral_term;
+        // if (pid->enable_integral_clamping)
+        // {
+        //     pid->integral_term = clamp(pid->integral_term, pid->integral_min, pid->integral_max);
+        // }
+        // i_term = pid->integral_term;
 
         float d_term = 0.0f;
         if (pid->Kd > 0.0f)
@@ -274,4 +274,3 @@ void PID_EnableIntegralClamping(PID_Controller_t *pid, uint8_t enable)
         pid->integral_term = clamp(pid->integral_term, pid->integral_min, pid->integral_max);
     }
 }
-

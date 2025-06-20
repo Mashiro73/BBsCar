@@ -4,8 +4,8 @@
 #include "main.h"
 
 //#define ADC_TEST_RAW
-#define ADC_TEST_AVE
-//#define ADC_TEST_NORM
+//#define ADC_TEST_AVE
+#define ADC_TEST_NORM
 
 #define NUM_CHANNELS 4
 #define SAMPLES_PER_CHANNEL 10
@@ -21,10 +21,10 @@
 extern uint8_t FlagADCDataReady; // 标志位，指示ADC数据是否准备好
 
 
-extern uint16_t adc_raw_values[NUM_CHANNELS]; // Or uint32_t if using 12-bit resolution aligned to the right in a 32-bit register
-extern float adc_ave_values[NUM_CHANNELS]; // 用于存储每个通道的平均值
-extern float adc_norm_values[NUM_CHANNELS] ; // 用于存储归一化后的值
-
+extern volatile uint16_t adc_raw_values[NUM_CHANNELS]; // Or uint32_t if using 12-bit resolution aligned to the right in a 32-bit register
+extern volatile float adc_ave_values[NUM_CHANNELS]; // 用于存储每个通道的平均值
+extern volatile float adc_norm_values[NUM_CHANNELS] ; // 用于存储归一化后的值
+extern volatile float adc_final_diff;
 float ADCValProc(void);
 
 #endif
