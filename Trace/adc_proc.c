@@ -98,13 +98,17 @@ float normalize_value(float value,
  */
 float ADCValProc(void)
 {
-    for (uint8_t i = 0; i < NUM_CHANNELS; i++)
+    if(FlagADCDataReady) // 检查标志位是否设置
     {
-        adc_ave_values[i] = trimmed_mean_filter(adc_samples[i], SAMPLES_PER_CHANNEL); // 计算每个通道的平均值
-    }
-    for (uint8_t j = 0; j < NUM_CHANNELS; j++)
-    {
-        adc_norm_values[j] = normalize_value(adc_ave_values[j], j == 0 || j == 3 ? TRANSVERSE_INDUCTANCE_MIN : VERTICAL_INDUCTANCE_MIN, j == 0 || j == 3 ? TRANSVERSE_INDUCTANCE_MAX : VERTICAL_INDUCTANCE_MAX, 0, 100); // 归一化每个通道的平均值
+        FlagADCDataReady = 0;
+        for (uint8_t i = 0; i < NUM_CHANNELS; i++)
+        {
+            adc_ave_values[i] = trimmed_mean_filter(adc_samples[i], SAMPLES_PER_CHANNEL); // 计算每个通道的平均值
+        }
+        for (uint8_t j = 0; j < NUM_CHANNELS; j++)
+        {
+            adc_norm_values[j] = normalize_value(adc_ave_values[j], j == 0 || j == 3 ? TRANSVERSE_INDUCTANCE_MIN : VERTICAL_INDUCTANCE_MIN, j == 0 || j == 3 ? TRANSVERSE_INDUCTANCE_MAX : VERTICAL_INDUCTANCE_MAX, 0, 100); // 归一化每个通道的平均值
+        }
     }
 }
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)

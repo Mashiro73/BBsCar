@@ -3,7 +3,9 @@
 
 #include "main.h"
 
-#define ADC_SERCH_MAX
+//#define ADC_TEST_RAW
+#define ADC_TEST_AVE
+//#define ADC_TEST_NORM
 
 #define NUM_CHANNELS 4
 #define SAMPLES_PER_CHANNEL 10
@@ -15,18 +17,14 @@
 #define VERTICAL_INDUCTANCE_MIN 0
 #define TRANSVERSE_INDUCTANCE_MIN 0
 
-extern uint16_t adc_raw_values[TOTAL_SAMPLES]; // Or uint32_t if using 12-bit resolution aligned to the right in a 32-bit register
 
 extern uint8_t FlagADCDataReady; // 标志位，指示ADC数据是否准备好
 
-#ifdef ADC_SERCH_MAX
-extern float induc_ave_val1;
-extern float induc_ave_val2;
-extern float induc_ave_val3;
-extern float induc_ave_val4;
-#endif
 
-extern float adc_ave_values[NUM_CHANNELS] = {0.0f, 0.0f, 0.0f, 0.0f}; // 用于存储每个通道的平均值
+extern uint16_t adc_raw_values[NUM_CHANNELS]; // Or uint32_t if using 12-bit resolution aligned to the right in a 32-bit register
+extern float adc_ave_values[NUM_CHANNELS]; // 用于存储每个通道的平均值
+extern float adc_norm_values[NUM_CHANNELS] ; // 用于存储归一化后的值
+
 float ADCValProc(void);
 
 #endif
