@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-#define MOTOR_BASE_SPEED 200
+#define MOTOR_BASE_SPEED 350
 #define MOTOR_MAX_SPEED 800
 #define MOTOR_MIN_SPEED 0
 
