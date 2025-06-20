@@ -75,8 +75,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim->Instance == TIM2)
   {
     ADCValProc();
-    Motor_SetSpeed(&MotorL, MOTOR_BASE_SPEED - adc_final_diff);
-    Motor_SetSpeed(&MotorR, MOTOR_BASE_SPEED + adc_final_diff);
+    Motor_SetSpeed(&MotorL, MOTOR_BASE_SPEED - 20*adc_final_diff);
+    Motor_SetSpeed(&MotorR, MOTOR_BASE_SPEED + 20*adc_final_diff);
   }
 }
 /* USER CODE END 0 */
